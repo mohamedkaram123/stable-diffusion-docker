@@ -6,7 +6,7 @@ USER root
 ARG HF_TOKEN
 
 # تثبيت الأدوات المطلوبة
-RUN apt update && apt install -y wget
+RUN apt update && apt install -y wget unzip
 
 # حفظ التوكن
 RUN mkdir -p /root/.huggingface && \
@@ -18,7 +18,7 @@ RUN mkdir -p /stable-diffusion-webui/models/IP-Adapter && \
     mkdir -p /stable-diffusion-webui/extensions/sd-webui-controlnet/models
 
 # تحميل ControlNet extension (في حال لم يكن موجودًا)
-RUN test -d /stable-diffusion-webui/extensions/sd-webui-controlnet || \
+RUN rm -rf /stable-diffusion-webui/extensions/sd-webui-controlnet && \
     wget -O /tmp/controlnet.zip https://github.com/Mikubill/sd-webui-controlnet/archive/refs/heads/main.zip && \
     unzip /tmp/controlnet.zip -d /tmp && \
     mv /tmp/sd-webui-controlnet-main /stable-diffusion-webui/extensions/sd-webui-controlnet
